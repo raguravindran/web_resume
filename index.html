@@ -17,13 +17,23 @@
         <div class="container">
             <nav>
                 <div class="logo"><img src="assets/images/profile.svg" alt="SR" class="logo-svg" /></div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+                <div class="nav-container">
+                    <ul class="nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li class="theme-toggle-item">
+                            <div class="theme-toggle">
+                                <button id="theme-toggle-btn" aria-label="Toggle dark mode">
+                                    <i class="fas fa-moon" id="dark-icon"></i>
+                                    <i class="fas fa-sun" id="light-icon" style="display: none;"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -242,5 +252,43 @@
     </footer>
 
     <script src="js/main.js"></script>
+    
+    <!-- Direct theme toggle script -->
+    <script>
+        // Immediately executing theme toggle functionality
+        (function() {
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const darkIcon = document.getElementById('dark-icon');
+            const lightIcon = document.getElementById('light-icon');
+            
+            if (themeToggleBtn) {
+                // Simple toggle function
+                function toggleTheme() {
+                    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        darkIcon.style.display = 'block';
+                        lightIcon.style.display = 'none';
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        darkIcon.style.display = 'none';
+                        lightIcon.style.display = 'block';
+                    }
+                }
+                
+                // Add click listener
+                themeToggleBtn.addEventListener('click', toggleTheme);
+                
+                // Set initial theme
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'block';
+                }
+            }
+        })();
+    </script>
 </body>
 </html>

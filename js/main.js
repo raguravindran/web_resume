@@ -1,4 +1,49 @@
+// Simple direct implementation of theme toggle
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing theme toggle');
+    
+    // Get DOM elements
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const darkIcon = document.getElementById('dark-icon');
+    const lightIcon = document.getElementById('light-icon');
+    
+    if (!themeToggleBtn) {
+        console.error('Theme toggle button not found');
+        return;
+    }
+    
+    console.log('Theme toggle button found');
+    
+    // Apply theme function
+    function applyTheme(isDark) {
+        if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (darkIcon) darkIcon.style.display = 'none';
+            if (lightIcon) lightIcon.style.display = 'inline-block';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (darkIcon) darkIcon.style.display = 'inline-block';
+            if (lightIcon) lightIcon.style.display = 'none';
+        }
+    }
+    
+    // Check for saved preference
+    let isDarkMode = localStorage.getItem('darkMode') === 'true';
+    
+    // Apply initial theme
+    applyTheme(isDarkMode);
+    console.log('Initial theme applied:', isDarkMode ? 'dark' : 'light');
+    
+    // Toggle theme on click
+    themeToggleBtn.addEventListener('click', function() {
+        console.log('Theme toggle button clicked');
+        isDarkMode = !isDarkMode;
+        localStorage.setItem('darkMode', isDarkMode);
+        applyTheme(isDarkMode);
+        console.log('Theme toggled to:', isDarkMode ? 'dark' : 'light');
+    });
+
+
     // Mobile navigation toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
